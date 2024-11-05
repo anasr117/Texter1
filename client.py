@@ -1,13 +1,21 @@
 # client.py
 import requests
 
-BASE_URL = " https://airedale-crack-meerkat.ngrok-free.app"
+BASE_URL = " http://127.0.0.1:5000"
 
 def register():
     username = input("Nom d'utilisateur : ")
     password = input("Mot de passe : ")
     response = requests.post(f"{BASE_URL}/register", json={"username": username, "password": password})
-    print(response.json()["message"])
+
+    # Afficher le code de statut et le texte brut pour le débogage
+    print("Statut de la réponse :", response.status_code)
+    print("Contenu brut de la réponse :", response.text)
+
+    try:
+        print(response.json()["message"])
+    except requests.exceptions.JSONDecodeError:
+        print("Erreur : La réponse du serveur n'est pas en JSON.")
 
 def login():
     username = input("Nom d'utilisateur : ")
@@ -19,12 +27,23 @@ def login():
     else:
         print("Échec de la connexion.")
         return None
-
+    
 def send_message(user):
-    receiver = input("Envoyer à : ")
+    recipient = input("Envoyer à : ")
     message = input("Message : ")
-    response = requests.post(f"{BASE_URL}/send_message", json={"sender": user, "receiver": receiver, "message": message})
-    print(response.json()["message"])
+    response = requests.post("http://127.0.0.1:5000/send_message", json={
+        "username": user,
+        "recipient": recipient,
+        "message": message
+    })
+    print("Statut de la réponse :", response.status_code)  # Affiche le code de statut HTTP
+    print("Contenu brut de la réponse :", response.text)  # Affiche le contenu brut de la réponse
+
+    try:
+        print(response.json()["message"])
+    except requests.exceptions.JSONDecodeError:
+        print("Erreur : La réponse du serveur n'est pas en JSON.")
+
 
 def get_messages(user):
     response = requests.get(f"{BASE_URL}/get_messages", params={"user": user})
