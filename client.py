@@ -1,16 +1,12 @@
 # client.py
 import requests
 
-BASE_URL = " http://127.0.0.1:5000"
+BASE_URL = "https://airedale-crack-meerkat.ngrok-free.app"
 
 def register():
     username = input("Nom d'utilisateur : ")
     password = input("Mot de passe : ")
     response = requests.post(f"{BASE_URL}/register", json={"username": username, "password": password})
-
-    # Afficher le code de statut et le texte brut pour le débogage
-    print("Statut de la réponse :", response.status_code)
-    print("Contenu brut de la réponse :", response.text)
 
     try:
         print(response.json()["message"])
@@ -31,13 +27,11 @@ def login():
 def send_message(user):
     recipient = input("Envoyer à : ")
     message = input("Message : ")
-    response = requests.post("http://127.0.0.1:5000/send_message", json={
-        "username": user,
-        "recipient": recipient,
-        "message": message
+    response = requests.post(f"{BASE_URL}/send_message", json={
+    "sender": user,
+    "receiver": recipient,
+    "message": message
     })
-    print("Statut de la réponse :", response.status_code)  # Affiche le code de statut HTTP
-    print("Contenu brut de la réponse :", response.text)  # Affiche le contenu brut de la réponse
 
     try:
         print(response.json()["message"])
@@ -52,7 +46,7 @@ def get_messages(user):
         print(f"{msg['sender']}: {msg['message']}")
 
 def main():
-    print("Bienvenue sur Texter1 !")
+    print("Bienvenue sur Texter1 Console (version 0.1)")
     user = None
     while True:
         if not user:
