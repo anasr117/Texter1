@@ -1,7 +1,7 @@
 # client.py
 import requests
 
-BASE_URL = "https://airedale-crack-meerkat.ngrok-free.app"
+BASE_URL = "http://31.37.178.30:13999"
 
 def register():
     username = input("Nom d'utilisateur : ")
