@@ -1,7 +1,7 @@
 # client.py
 import requests
 
-BASE_URL = "http://31.37.178.30:13999"
+BASE_URL = "http://31.37.178.30:5000"
 
 def register():
     username = input("Nom d'utilisateur : ")
